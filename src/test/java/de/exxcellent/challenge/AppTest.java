@@ -9,9 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 /**
@@ -34,14 +35,16 @@ public class AppTest {
 	}
 
 	@Test
-	public void runFootball() throws IOException {
+	public void runFootball() throws IOException, URISyntaxException {
 		PrintStream originalOut = System.out;
 		Path path = Files.createTempFile("challenge", ".txt");
 		File file = path.toFile();
 		file.deleteOnExit();
 		PrintStream out = new PrintStream(file);
 		System.setOut(out);
-		App.main("--football", "football.csv");
+		URI uri = App.class.getResource("football.csv").toURI();
+		File f = new File(uri);
+		App.main("--football", f.getAbsolutePath());
 		System.setOut(originalOut);
 		Scanner s = new Scanner(file);
 		while (s.hasNextLine()) {
