@@ -35,21 +35,45 @@ public class AppTest {
 	}
 
 	@Test
-	public void runFootball() throws IOException, URISyntaxException {
+	public void runFootballWithoutDups() throws IOException, URISyntaxException {
 		PrintStream originalOut = System.out;
 		Path path = Files.createTempFile("challenge", ".txt");
 		File file = path.toFile();
 		file.deleteOnExit();
 		PrintStream out = new PrintStream(file);
 		System.setOut(out);
-		URI uri = App.class.getResource("football.csv").toURI();
+		URI uri = AppTest.class.getResource("football-without-dups.csv").toURI();
 		File f = new File(uri);
 		App.main("--football", f.getAbsolutePath());
 		System.setOut(originalOut);
 		Scanner s = new Scanner(file);
 		while (s.hasNextLine()) {
 			String line = s.nextLine();
+			System.out.println(line);
 			assertTrue(line.contains("Aston_Villa"));
+		}
+		s.close();	
+	}
+
+	@Test
+	public void runFootballWithDups() throws IOException, URISyntaxException {
+		PrintStream originalOut = System.out;
+		Path path = Files.createTempFile("challenge", ".txt");
+		File file = path.toFile();
+		file.deleteOnExit();
+		PrintStream out = new PrintStream(file);
+		System.setOut(out);
+		URI uri = AppTest.class.getResource("football-with-dups.csv").toURI();
+		File f = new File(uri);
+		App.main("--football", f.getAbsolutePath());
+		System.setOut(originalOut);
+		Scanner s = new Scanner(file);
+		while (s.hasNextLine()) {
+			String line = s.nextLine();
+			System.out.println(line);
+			assertTrue(line.contains("West_Ham"));
+			assertTrue(line.contains("Aston_Villa"));
+			assertTrue(line.contains("Southampton"));
 		}
 		s.close();	
 	}
