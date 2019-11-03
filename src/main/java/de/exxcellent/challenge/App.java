@@ -8,6 +8,8 @@ import java.util.List;
 import de.exxcellent.challenge.csv.CsvReader;
 import de.exxcellent.challenge.football.FootballTeamStandings;
 import de.exxcellent.challenge.football.LeastGoalSpread;
+import de.exxcellent.challenge.weather.LeastVaryingTemperature;
+import de.exxcellent.challenge.weather.WeatherReport;
 
 /**
  * The entry class for your solution. This class is only aimed as starting point
@@ -41,10 +43,9 @@ public final class App {
 	}
 
 	// Print usage
-	private static void printUsage()
-	{
+	private static void printUsage() {
 		System.out.println("Usage: App --football <path to input file>");
-		System.out.println("Usage: App --weather <path to input file>");		
+		System.out.println("Usage: App --weather <path to input file>");
 	}
 
 	// Run the football challenge.
@@ -63,7 +64,15 @@ public final class App {
 
 	// Run the weather challenge.
 	private static void doWeatherChallenge(File input) {
-		String dayWithSmallestTempSpread = "14";
-		System.out.printf("Day(s) with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
+		List<WeatherReport> reports = null;
+		try (CsvReader reader = new CsvReader(input)) {
+			LeastVaryingTemperature analyst = new LeastVaryingTemperature();
+			reports = analyst.findAll(reader);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+
+		System.out.printf("Day(s) with smallest temperature spread : %s%n", Arrays.deepToString(reports.toArray()));
 	}
 }
