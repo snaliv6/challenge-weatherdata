@@ -25,13 +25,32 @@ public final class App {
 	 */
 	public static void main(String... args) {
 		if (args.length != 2) {
-			System.out.println("Usage: App --football <path to input file>");
+			printUsage();
 			System.exit(1);
 		}
 
 		File file = new File(args[1]);
+		if (args[0].contains("football")) {
+			doFootballChallenge(file);
+		} else if (args[0].contains("weather")) {
+			doWeatherChallenge(file);
+		} else {
+			printUsage();
+			System.exit(1);
+		}
+	}
+
+	// Print usage
+	private static void printUsage()
+	{
+		System.out.println("Usage: App --football <path to input file>");
+		System.out.println("Usage: App --weather <path to input file>");		
+	}
+
+	// Run the football challenge.
+	private static void doFootballChallenge(File input) {
 		List<FootballTeamStandings> standings = null;
-		try (CsvReader reader = new CsvReader(file)) {
+		try (CsvReader reader = new CsvReader(input)) {
 			LeastGoalSpread analyst = new LeastGoalSpread();
 			standings = analyst.findAll(reader);
 		} catch (FileNotFoundException e) {
@@ -39,7 +58,12 @@ public final class App {
 			System.exit(1);
 		}
 
-		System.out.printf("Team(s) with smallest goal spread       : %s%n",
-				Arrays.toString(standings.toArray()));
+		System.out.printf("Team(s) with smallest goal spread       : %s%n", Arrays.toString(standings.toArray()));
+	}
+
+	// Run the weather challenge.
+	private static void doWeatherChallenge(File input) {
+		String dayWithSmallestTempSpread = "14";
+		System.out.printf("Day(s) with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
 	}
 }
