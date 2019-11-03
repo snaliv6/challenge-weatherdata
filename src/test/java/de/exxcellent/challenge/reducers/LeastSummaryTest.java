@@ -21,7 +21,7 @@ class LeastSummaryTest {
 	void testWithOneObject() {
 		LeastSummary<Tester, Integer> summary = LeastSummary.comparing(Tester::getValue);
 		Arrays.asList(new Tester("alice", 100)).forEach(summary::accept);
-		assertEquals(Arrays.asList(new Tester("alice", 100)), summary.leasts());
+		assertEquals(Arrays.asList(new Tester("alice", 100)), summary.get());
 	}
 
 	/**
@@ -32,7 +32,7 @@ class LeastSummaryTest {
 	void testWithTwoObjectsWithDifferentValues() {
 		LeastSummary<Tester, Integer> summary = LeastSummary.comparing(Tester::getValue);
 		Arrays.asList(new Tester("alice", 100), new Tester("bob", -100)).forEach(summary::accept);
-		assertEquals(Arrays.asList(new Tester("bob", -100)), summary.leasts());
+		assertEquals(Arrays.asList(new Tester("bob", -100)), summary.get());
 	}
 
 	/**
@@ -43,7 +43,7 @@ class LeastSummaryTest {
 	void testWithTwoObjectWithSameValue() {
 		LeastSummary<Tester, Integer> summary = LeastSummary.comparing(Tester::getValue);
 		Arrays.asList(new Tester("alice", 100), new Tester("bob", 100)).forEach(summary::accept);
-		assertEquals(Arrays.asList(new Tester("alice", 100), new Tester("bob", 100)), summary.leasts());
+		assertEquals(Arrays.asList(new Tester("alice", 100), new Tester("bob", 100)), summary.get());
 	}
 
 	/**
@@ -54,7 +54,7 @@ class LeastSummaryTest {
 	void testComparisonOfStringLength() {
 		LeastSummary<Tester, Integer> summary = LeastSummary.comparing(tester -> tester.getName().length());
 		Arrays.asList(new Tester("alice", 1), new Tester("bob", 1)).forEach(summary::accept);
-		assertEquals(Arrays.asList(new Tester("bob", 1)), summary.leasts());
+		assertEquals(Arrays.asList(new Tester("bob", 1)), summary.get());
 	}
 
 	// Test class

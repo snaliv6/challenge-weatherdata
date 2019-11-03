@@ -48,6 +48,6 @@ public final class App {
 		}
 
 		System.out.printf("Team(s) with smallest goal spread       : %s%n",
-				Arrays.toString(summary.leasts().toArray()));
+				Arrays.toString(summary.get().toArray()));
 	}
 }

@@ -34,7 +34,7 @@ public interface LeastSummary<T, U extends Comparable<U>> {
 			private List<T> list = new ArrayList<>();
 
 			@Override
-			public List<T> leasts() {
+			public List<T> get() {
 				return list;
 			}
 
@@ -51,7 +51,7 @@ public interface LeastSummary<T, U extends Comparable<U>> {
 	 *
 	 * @return the list of objects
 	 */
-	List<T> leasts();
+	List<T> get();
 
 	/**
 	 * Extract a value from an object for the comparison.
@@ -71,20 +71,20 @@ public interface LeastSummary<T, U extends Comparable<U>> {
 	 * @param object
 	 */
 	default void accept(T object) {
-		if (leasts().isEmpty()) {
+		if (get().isEmpty()) {
 			// This is first object so no comparison is needed. Just add it to the list of
 			// leasts.
-			leasts().add(object);
-		} else if (leasts().stream().map(this::value).filter(least -> least.compareTo(value(object)) == 0).findAny()
+			get().add(object);
+		} else if (get().stream().map(this::value).filter(least -> least.compareTo(value(object)) == 0).findAny()
 				.isPresent()) {
 			// Add the object because its value is equal to ones in the list.
-			leasts().add(object);
-		} else if (leasts().stream().map(this::value).filter(least -> least.compareTo(value(object)) > 0).findAny()
+			get().add(object);
+		} else if (get().stream().map(this::value).filter(least -> least.compareTo(value(object)) > 0).findAny()
 				.isPresent()) {
 			// The objects value is less than the values in the list. Clear the list and add
 			// this object as the new least.
-			leasts().clear();
-			leasts().add(object);
+			get().clear();
+			get().add(object);
 		}
 	}
 }
