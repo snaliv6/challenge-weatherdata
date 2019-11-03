@@ -2,7 +2,10 @@ package de.exxcellent.challenge;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -26,7 +29,7 @@ public final class App {
     		System.exit(1);
     	}
 
-    	String teamWithSmallestGoalSpread = "Some mediocre team";
+    	List<String> teamsWithSmallestGoalSpread = new ArrayList<>();
     	int spread = Integer.MAX_VALUE;
 
         File file = new File(args[1]);
@@ -42,15 +45,29 @@ public final class App {
         		if (i == 0) {
 					// The first line of the file has the names of the fields. Add them to the map.
 					fieldNameToIndex = reader.fieldNameToIndexMap(line);
-
         		} else {
+        			String team = fields[fieldNameToIndex.get("Team")];
         			int goals = Integer.parseInt(fields[fieldNameToIndex.get("Goals")]);
         			int goalsAllowed = Integer.parseInt(fields[fieldNameToIndex.get("Goals Allowed")]);
         			int diff = Math.abs(goals - goalsAllowed);
-        			if (diff < spread)
+        			if (teamsWithSmallestGoalSpread.isEmpty())
         			{
+						// This is the first team in the file, so it has the least goal difference. Add
+						// it to the list.
+        				teamsWithSmallestGoalSpread.add(team);
         				spread = diff;
-        				teamWithSmallestGoalSpread = fields[fieldNameToIndex.get("Team")];
+        			}
+        			else if (diff < spread)
+        			{
+        				// The current team has a smaller goal difference. Clear the list and add this team.
+        				spread = diff;
+        				teamsWithSmallestGoalSpread.clear();
+        				teamsWithSmallestGoalSpread.add(team);
+        			}
+        			else if (diff == spread)
+        			{
+        				// The current team has an equally low spread. Add it to the list.
+        				teamsWithSmallestGoalSpread.add(team);
         			}
         		}
         		i++;
@@ -60,6 +77,6 @@ public final class App {
 			System.exit(1);
 		}
 
-        System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
+        System.out.printf("Team(s) with smallest goal spread       : %s%n", Arrays.toString(teamsWithSmallestGoalSpread.toArray()));
     }
 }
