@@ -6,18 +6,18 @@ package de.exxcellent.challenge.csv;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import de.exxcellent.challenge.dto.StringFieldsIterator;
 
 /**
  * Reader of CSV formatted data. The class assumes the first line of the file
  * contains the names of the fields.
  */
-public class CsvReader implements AutoCloseable, Iterator<String[]> {
+public class CsvReader implements AutoCloseable, StringFieldsIterator {
 	private String fieldSep = ",";
 
 	private final Scanner scanner;
@@ -42,40 +42,33 @@ public class CsvReader implements AutoCloseable, Iterator<String[]> {
 		}
 	}
 
-	/**
-	 * Returns the field. Only use this method after {@link #next()}.
-	 * 
-	 * @param name of the field
-	 * @return the value
-	 */
-	public String valueOf(String name) {
-		return currentFields[nameToIndexMap.get(name)];
-	}
-
-	/**
-	 * Return the field as in an int. Only use this method after {@link #next()}.
-	 * This method does validate input. It is up to the user to use this method on
-	 * fields that are known to be ints.
-	 *
-	 * @param name of the field
-	 * @return the value as an int
-	 */
-	public int intValueOf(String name) {
-		return Integer.parseInt(valueOf(name));
-	}
-
-	/**
-	 * @return the nameToIndexMap
-	 */
-	public Map<String, Integer> getNameToIndexMap() {
-		return nameToIndexMap;
-	}
-
 	@Override
 	public void close() {
 		if (scanner != null) {
 			scanner.close();
 		}
+	}
+
+	@Override
+	public boolean hasNext() {
+		return scanner.hasNextLine();
+	}
+
+	@Override
+	public String[] next() {
+		String line = scanner.nextLine();
+		currentFields = fields(line);
+		return currentFields;
+	}
+
+	@Override
+	public Map<String, Integer> fieldNameToIndexMap() {
+		return nameToIndexMap;
+	}
+
+	@Override
+	public String[] currentFields() {
+		return currentFields;
 	}
 
 	// Create a map from the first line of the file.
@@ -87,21 +80,5 @@ public class CsvReader implements AutoCloseable, Iterator<String[]> {
 	// Split the line based on the field separator.
 	private String[] fields(String line) {
 		return line.split(fieldSep);
-	}
-
-	@Override
-	public boolean hasNext() {
-		return scanner.hasNextLine();
-	}
-
-	@Override
-	public String[] next() {
-		if (!hasNext()) {
-			throw new NoSuchElementException();
-		}
-
-		String line = scanner.nextLine();
-		currentFields = fields(line);
-		return currentFields;
 	}
 }
