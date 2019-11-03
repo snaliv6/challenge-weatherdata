@@ -3,9 +3,11 @@ package de.exxcellent.challenge;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.List;
+
 import de.exxcellent.challenge.csv.CsvReader;
 import de.exxcellent.challenge.football.FootballTeamStandings;
-import de.exxcellent.challenge.reducers.LeastSummary;
+import de.exxcellent.challenge.football.LeastGoalSpread;
 
 /**
  * The entry class for your solution. This class is only aimed as starting point
@@ -28,26 +30,16 @@ public final class App {
 		}
 
 		File file = new File(args[1]);
-		LeastSummary<FootballTeamStandings, Integer> summary = LeastSummary
-				.comparing(standings -> Math.abs(standings.getGoals() - standings.getGoalsAllowed()));
+		List<FootballTeamStandings> standings = null;
 		try (CsvReader reader = new CsvReader(file)) {
-			while (reader.hasNext()) {
-				reader.next();
-				String team = reader.valueOf("Team");
-				int goals = reader.intValueOf("Goals");
-				int goalsAllowed = reader.intValueOf("Goals Allowed");
-				FootballTeamStandings st = new FootballTeamStandings();
-				st.setTeam(team);
-				st.setGoals(goals);
-				st.setGoalsAllowed(goalsAllowed);
-				summary.accept(st);
-			}
+			LeastGoalSpread analyst = new LeastGoalSpread();
+			standings = analyst.findAll(reader);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
 
 		System.out.printf("Team(s) with smallest goal spread       : %s%n",
-				Arrays.toString(summary.get().toArray()));
+				Arrays.toString(standings.toArray()));
 	}
 }
