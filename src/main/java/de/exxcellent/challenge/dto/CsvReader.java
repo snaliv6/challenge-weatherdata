@@ -1,7 +1,7 @@
 /**
  * @author Scott Purcell <son_91egp@yahoo.com>
  */
-package de.exxcellent.challenge.csv;
+package de.exxcellent.challenge.dto;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import de.exxcellent.challenge.dto.StringFieldsIterator;
 
 /**
  * Reader of CSV formatted data. The class assumes the first line of the file
