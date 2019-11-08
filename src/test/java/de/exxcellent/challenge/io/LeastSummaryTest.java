@@ -1,13 +1,15 @@
 /**
  * @author Scott Purcell <son_91egp@yahoo.com>
  */
-package de.exxcellent.challenge.reducers;
+package de.exxcellent.challenge.io;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
+
+import de.exxcellent.challenge.analysis.LeastSummary;
 
 /**
  * Unit test of the least summary interface's default and static methods.

@@ -5,9 +5,9 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 
-import de.exxcellent.challenge.dto.CsvReader;
 import de.exxcellent.challenge.football.FootballTeamStandings;
 import de.exxcellent.challenge.football.LeastGoalSpread;
+import de.exxcellent.challenge.io.CsvReader;
 import de.exxcellent.challenge.weather.LeastVaryingTemperature;
 import de.exxcellent.challenge.weather.WeatherReport;
 

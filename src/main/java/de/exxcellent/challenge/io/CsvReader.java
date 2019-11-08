@@ -1,7 +1,7 @@
 /**
  * @author Scott Purcell <son_91egp@yahoo.com>
  */
-package de.exxcellent.challenge.dto;
+package de.exxcellent.challenge.io;
 
 import java.io.File;
 import java.io.FileNotFoundException;

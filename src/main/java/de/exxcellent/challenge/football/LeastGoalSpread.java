@@ -4,8 +4,9 @@
 package de.exxcellent.challenge.football;
 
 import java.util.List;
-import de.exxcellent.challenge.dto.StringFieldsIterator;
-import de.exxcellent.challenge.reducers.LeastSummary;
+
+import de.exxcellent.challenge.analysis.LeastSummary;
+import de.exxcellent.challenge.io.StringFieldsIterator;
 
 /**
  * Creates a report of teams with the least spread goal difference.

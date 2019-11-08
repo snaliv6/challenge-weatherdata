@@ -14,8 +14,8 @@
  * to achieve business goals such as displaying the list of days in a month that
  * have the lowest temperature spread.
  * <p>
- * The business objects are supported by objects from the d.e.c.dto and
- * d.e.c.reducers packages. The DTO package provides classes and interfaces for
+ * The business objects are supported by objects from the d.e.c.io and
+ * d.e.c.analysis packages. The IO package provides classes and interfaces for
  * handling data while the reducers package provides class and interfaces for
  * analyzing data.
  * <p>
@@ -24,7 +24,7 @@
  * reading data and an implementation for CSV files. The interface could easily
  * be extended for JSON other data transfer formats.
  * <p>
- * The reducers package is meant for objects that analyze data. At present the
+ * The analysis package is meant for objects that analyze data. At present the
  * package contains a single interfaces for finding objects with a minimum
  * value. Other analysis classes and interface would be added here.
  *

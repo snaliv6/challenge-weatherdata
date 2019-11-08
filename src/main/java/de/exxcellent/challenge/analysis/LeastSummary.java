@@ -1,7 +1,7 @@
 /**
  * @author Scott Purcell <son_91egp@yahoo.com>
  */
-package de.exxcellent.challenge.reducers;
+package de.exxcellent.challenge.analysis;
 
 import java.util.ArrayList;
 import java.util.List;
