@@ -27,7 +27,7 @@ public interface LeastSummary<T, U extends Comparable<U>> {
 	 * @param <T>            Type of object to provide summaries of
 	 * @param <U>            A {@link Comparable} type to compare
 	 * @param valueExtractor function to get the value to compare from the object
-	 * @return the summary
+	 * @return the summary object
 	 */
 	static <T, U extends Comparable<U>> LeastSummary<T, U> comparing(Function<T, U> valueExtractor) {
 		return new LeastSummary<T, U>() {

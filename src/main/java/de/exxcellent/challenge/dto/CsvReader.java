@@ -6,14 +6,27 @@ package de.exxcellent.challenge.dto;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Reader of CSV formatted data. The class assumes the first line of the file
- * contains the names of the fields.
+ * Reader of CSV formatted data.
+ * <p>
+ * The object is an {@link Iterator}, so it obeys the same contract. First, for
+ * test for the presence of data with {@link #hasNext()}. If the method returns
+ * true, access the data with {@link #next()}.
+ * <p>
+ * The object keeps a reference to the fields in the line. For convenience, the
+ * value can be converted into an int with {@link #intValueOf(String)}.
+ * <p>
+ * The first line of the full must contain the names of the fields. When the
+ * object is constructed, the first line is read and
+ * {@link #fieldNameToIndexMap()} is set.
+ * <p>
+ * The object uses resources, so it must be closed after it is used.
  */
 public class CsvReader implements AutoCloseable, StringFieldsIterator {
 	private String fieldSep = ",";
@@ -27,7 +40,11 @@ public class CsvReader implements AutoCloseable, StringFieldsIterator {
 
 	/**
 	 * Create the object with a file. This class does not take control of the file.
-	 * In other words, the user still must manage the file (e.g. close, etc.)
+	 * In other words, the user still must manage the file.
+	 * <p>
+	 * It is assumed that the first line of the file comprises the names of the
+	 * fields. When the object is constructed, the first line of the file fills the
+	 * index map.
 	 *
 	 * @param file to read
 	 * @throws FileNotFoundException if the file isn't found.

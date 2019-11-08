@@ -4,7 +4,7 @@
 package de.exxcellent.challenge.football;
 
 /**
- * The current standing of a particular team
+ * The current standing of a particular football team
  */
 public class FootballTeamStandings {
 

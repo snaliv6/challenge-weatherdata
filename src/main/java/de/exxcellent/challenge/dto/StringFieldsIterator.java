@@ -40,7 +40,7 @@ public interface StringFieldsIterator extends Iterator<String[]> {
 	}
 
 	/**
-	 * Convenience method getting the value for a field as an integer. Use this
+	 * Convenience method getting the value of a field as an integer. Use this
 	 * after {@link #next()}. The method does not perform validity checks. It is up
 	 * to the user to call this on a field with an int format.
 	 *
